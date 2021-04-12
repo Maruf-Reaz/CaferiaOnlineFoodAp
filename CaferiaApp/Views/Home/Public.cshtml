@@ -1,0 +1,1166 @@
+﻿@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Public";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caferia - Web and Mobile Application</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="test">
+    <meta name="keywords" content="caferia">
+    <meta name="author" content="Kamlesh Yadav">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+
+        var BASE_URL = 'http://hostingsites.co.in/developer33/caferia/';
+
+    </script>
+    <link rel="icon" type="image/ico" href="~/assets/front/images/front_imges/19e9bd06bd8a588a4945cee88bbedcc6.png" />
+
+
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/js/plugin/swiper/css/swiper.min.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/css/bootstrap.min.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/fonts/fontawesome/css/font-awesome.min.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/css/fonts.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/js/plugin/timepicker/timepicker.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/js/plugin/datepicker/bootstrap-datepicker.min.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/js/plugin/scroll/jquery.mCustomScrollbar.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/css/flaticon.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/css/style.min.css">
+    <link asp-append-version="true" rel="stylesheet" type="text/css" href="~/assets/front/css/toastr.css">
+    <!-- custom css links-->
+
+
+</head>
+
+<body>
+
+
+
+    @*<form action="http://hostingsites.co.in/developer33/caferia/front/accept_coockies">
+            <div class="fd_cookie_message">
+                <div class="fd_container">
+                    <a href="javascript:;" onclick=" $('.fd_cookie_message').hide();" class="fd_close"></a>
+                    <div>
+                        <h4 class="fd_subheading">Accept Cookies</h4>
+                        <p>We use them to give you the best experience. If you continue using our website, we'll assume that you are happy to receive all cookies on this website.We use them to give you the best experience. If you continue using our website, we'll assume that you are happy to receive all cookies on this website. <a target="_blank" href="https://themes91.in/caferia/front/policy">More Information</a> </p>
+                    </div>
+                    <button type="submit" class="fd_btn">Accept Cookies</button><p></p>
+                </div>
+            </div>
+        </form>*@
+    <div class="fd_header" id="header">
+        <div class="fd_logo">
+            <a href="http://hostingsites.co.in/developer33/caferia/"><img src="~/assets/front/images/front_imges/19e9bd06bd8a588a4945cee88bbedcc6.png" alt=""></a>
+        </div>
+        <div class="fd_right_section">
+            <button data-toggle="collapse" data-target="#menu" class="fd_toggle"><i class="fa fa-bars" aria-hidden="true"></i></button>
+            <div class="fd_menu collapse" id="menu">
+                <ul>
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#menus">Menu</a></li>
+                    <li><a href="#reservation">Reservation</a></li>
+                    <li><a href="#testimonial">Testimonial</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+
+            </div>
+
+            <div class="fd_search">
+                <a><span class="flaticon-216-search-2"></span></a>
+                <div class="fd_Seardh_box fd_transition">
+                    <div class="fd_search_field">
+                        <input type="text" name="search" onkeyup="filter_front()" id="fb_keyword1" value="" class="form-control" placeholder="Search Here.....">
+                        <button class="fd_btn">search</button>
+
+                        <div class="fd_related_search" id="result">
+                            <ul id="data_disp"></ul>
+                        </div>
+                    </div>
+                    <span class="fd_close"></span>
+                </div>
+            </div>
+            <div class="fd_user" id="fd_user">
+                @if (ViewBag.User == null)
+                {
+                    <a class="fd_login">
+                        <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/user.svg" id="user_login">
+
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+
+                    <div class="fd_user_wrapper text-center fd_transition">
+                        <ul class="nav nav-tabs">
+                            <li><a class="s1 active" href="#signin">sign in</a></li>
+                            <li><a id="s2" href="#signup">sign up</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="signin" class="tab-pane in active">
+                                <div class="fd_user_inner fd_signin">
+                                    <form id="loginform">
+                                        <input type="text" id="lemail" placeholder="Email or Mobile" class="form-control" value="">
+                                        <input type="password" id="lpassword" placeholder="Password" class="form-control" value="">
+
+                                        <input type="checkbox" name="check" value="" id="fd_check">
+                                        <label class="fd_check_box" for="fd_check">keep me signed in</label>
+
+                                        <button type="submit" id="publicLoginSubmit" class="fd_btn">sign in</button>
+                                    </form>
+                                    <a class="fd_forgot_password_link">forgot password ?</a>
+                                </div>
+                            </div>
+                            <div id="signup" class="tab-pane">
+                                <div class="fd_user_inner fd_signin">
+                                    <form id="signupform">
+                                        <input type="text" id="name" name="user_name" placeholder="Name" class="form-control">
+                                        <input type="text" id="email" name="user_email" placeholder="Email" class="form-control">
+                                        <input type="password" id="password" name="user_pass" placeholder="Password" class="form-control">
+
+                                        <button type="submit" class="fd_btn">submit</button>
+                                    </form>
+                                    <a class="s1">already have an account ?</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fd_user_inner fd_forgot_password fd_transition">
+                            <form id="formsforget" action="http://hostingsites.co.in/developer33/caferia/front/auth/forgot" method="POST">
+                                <a class="fd_close"></a>
+                                <h2 class="fd_subheading">Forgot Password?</h2>
+
+                                <p>To Reset Your Password,Enter Your Full Email Address To Request a Password Reset</p>
+                                <input type="text" value="" id="femail" placeholder="Email or Mobile" class="form-control">
+                                <button type="submit" class="fd_btn">submit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="fd_user_wrapper text-center fd_transition fd_user_profile">
+                        <span class="fd_user_close"><i class="fa fa-times"></i></span>
+                        <ul class="nav nav-tabs">
+                            <li><a class="profile_user active" href="#user">Profile</a></li>
+                            <li><a class="order_history" href="#order_history">Orders</a></li>
+                            <li><a class="wallet_request" href="#wallet_request">Wallet</a></li>
+
+                        </ul>
+                        <div class="tab-content">
+
+                            <div id="user" class="tab-pane in active">
+                                <div id="user" class="tab-pane in active">
+                                    <div class="fd_user_inner fd_signin">
+                                        <input type="text" placeholder="Full Name Name" id="name" value="Reaz" class="form-control">
+                                        <input type="text" placeholder="Contact Number" id="cno" value="" class="form-control">
+                                        <input type="text" placeholder="Enter Address" value="" id="address" class="form-control">
+                                        <input type="text" placeholder="Enter City" value="" id="city" class="form-control">
+                                        <input type="text" placeholder="Enter State" value="" id="state" class="form-control">
+                                        <input type="text" placeholder="Enter Country" value="" id="contry" class="form-control">
+                                        <input type="text" placeholder="Enter pin" value="" id="pin" class="form-control">
+                                        <input type="hidden" id="ps1" value="61cc0e405f4b518d264c089ac8b642ef">
+                                        <input type="hidden" id="id" value="64">
+                                        <input type="password" placeholder="Password" id="password" class="form-control">
+                                        <button type="submit" onclick="user_profile();" class="fd_btn">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="order_history" class="tab-pane">
+                                <div class="fd_order_status fd_signin">
+                                    <table class="table table-hover table-condensed">
+                                        <tr>
+                                            <th>Order</th>
+                                            <th>Quantity</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        @if (ViewBag.OrderItems.Count != 0)
+                                        {
+                                            foreach (var item in ViewBag.OrderItems)
+                                            {
+                                                <tr>
+                                                    <td>@item.Item.Name</td>
+                                                    <td>@item.Quantity</td>
+                                                    <td>@item.Item.Price</td>
+                                                    <td>@String.Format("{0:yyyy-MM-dd}", item.Order.OrderDate)</td>
+                                                    @if (item.Order.OrderStatus == 1)
+                                                    {
+                                                        <td>Order Confirmed</td>
+                                                    }
+
+                                                </tr>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan='5'>Order Not Found</td></tr>
+                                        }
+
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div id="wallet_request" class="tab-pane ">
+                                <div id="wallet_request" class="tab-pane ">
+                                    <div class="fd_user_inner fd_signin">
+                                        <input type="text" readonly value="Current Balance  : @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(ViewBag.User.Balance)) BDT" class="form-control">
+                                        <input type="text" placeholder="Phone Number" id="walletPhone" value="" class="form-control">
+                                        <input type="text" placeholder="Request Amount" id="walletReqAmount" value="0" class="form-control">
+                                        <input type="text" placeholder="Transaction Id" id="transactionId" value="" class="form-control">
+                                        <input type="text" placeholder="Note" id="remarks" value="" class="form-control">
+
+                                        <button type="submit" onclick="wallet_request();" class="fd_btn">Submit Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                    <a href="javascript:void(0)">
+                        <span class="user_icon">
+                            R
+                        </span>
+                        <i title="Signout" id="signOutBtn" class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+
+
+
+
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+    <!--banner start-->
+    <div class="fd_banner_wpapper" style="background-image:url('http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/banner_img.jpg');" id="home">
+        <div class="fd_shap_wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                        <div class="fd_banner_content text-center">
+                            <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/cup.png" alt="" class="img-fluid">
+                            <div class="fd_styletext_box">
+                                <h1 class="fd_style_text">Coffee Market</h1>
+                            </div>
+                            <h1>LIVE YOUR LIFE WITH ENERGY</h1>
+                            <a href="javascript:void(0);" class="fd_btn" data-target=".fd_banner_wpapper">Online Orders</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="javascript:void(0);" class="fd_down_button" data-target=".fd_banner_wpapper">
+                                <span class="fd_ring_effect"><span><span><span class="fd_icon"></span></span></span></span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--product start-->
+    <div class="fd_section" id="menus">
+        <div class="fd_shap_wrapper fd_shap_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="fd_heading_wrapper text-center">
+                            <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/cup.svg" alt="">
+                            <h1>our menu</h1>
+                        </div>
+                    </div>
+
+                    <div class="fd_filter_wrapper">
+                        <!-- menu-for-isotope -->
+                        <ul class="fd_filter_menu">
+                            <li data-filter="*" class="active fd_transition" id="allMenu">all</li>
+                            @foreach (var itemCatagory in ViewBag.ItemCatagories)
+                            {
+                                string catagoryClass = itemCatagory.Name;
+                                catagoryClass = catagoryClass.Replace(" ", String.Empty);
+
+                                <li onclick="getcatallitem(@itemCatagory.Id)" data-filter=".@catagoryClass" class="fd_transition"> @itemCatagory.Name </li>
+                            }
+                            @*<li onclick="getcatallitem(1)" data-filter=".drinks" class="fd_transition"> Drinks </li>
+                                <li onclick="getcatallitem(2)" data-filter=".snakes" class="fd_transition"> Snakes </li>
+                                <li onclick="getcatallitem(3)" data-filter=".ice_cream" class="fd_transition"> Ice cream </li>
+                                <li onclick="getcatallitem(4)" data-filter=".fast_food" class="fd_transition"> Fast Food </li>
+                                <li onclick="getcatallitem(5)" data-filter=".dinner" class="fd_transition"> Dinner </li>
+                                <li onclick="getcatallitem(6)" data-filter=".salate" class="fd_transition"> Salate </li>*@
+
+                            <input type="hidden" value="" id="tempcat">
+
+                        </ul>
+                        <!-- filter-for-isotope -->
+
+                        <div class="grid">
+
+                            @foreach (var item in ViewBag.Items)
+                            {
+                                string uniqueToken = Guid.NewGuid().ToString();
+                                string catagoryClass = item.ItemCatagory.Name;
+                                catagoryClass = catagoryClass.Replace(" ", String.Empty);
+
+                                <div class="col-md-4 col-sm-6 col-xs-12 element-item @catagoryClass">
+                                    <div class="fd_shop_box">
+                                        <div class="fd_shop_img">
+                                            <img src="~/files/items/@item.PhotoName1" alt="~/files/noImage.png" class="img-fluid">
+                                            <div class="fd_shop_detail fd_transition">
+                                                <h2>@item.Name</h2>
+                                                <h3> BTD @item.Price</h3>
+                                            </div>
+                                        </div>
+                                        <div class="fd_shop_overlay fd_transition">
+                                            <a href="javascript:void(0);" onclick="addCart(@item.Id,1,'@uniqueToken'); void(0); return false;"><span class="fd_transition"><i class="fa fa-shopping-cart"></i></span></a>
+
+                                            <ul class="fd_rating fd_transition">
+                                                <li><a href="javascript:;"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                                <li><a href="javascript:;"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                                <li><a href="javascript:;"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                                <li><a href="javascript:;"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                                <li><a href="javascript:;"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                            <h2 class="fd_transition">@item.Name</h2>
+
+                                            <h3 class="fd_transition">BTD @item.Price</h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+
+                        <div class="text-center">
+                            <span id="changeMore">
+                                <a id="isoitem" href="javascript:void(0);" class="fd_down_button fd_viewmore_wrapper fd_transition ">
+                                    <span><span><span class="fd_viewmore_btn">view more</span></span></span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--product end-->
+    <!--reservation start-->
+    <div class="fd_section fd_section_overlay fd_padder_top80" id="reservation" style="background-image:url('http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/reservation_bg.jpg')">
+        <div class="fd_shap_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="fd_heading_wrapper text-center">
+                            <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/cup_white.svg" alt="">
+                            <h1 class="fd_white_color">Reservation</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fd_opening_time_wrapper text-center">
+                            <div class="fd_heading">
+                                <div class="fd_shap_wrapper">
+                                    <h1>Opening - Closing Times</h1>
+                                </div>
+                            </div>
+                            <div class="fd_opentime">
+                                <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/cup1.svg" alt="">
+                                <ul>
+                                    <li><span>Monday</span><span>11:15 AM - 7:20 PM</span></li>
+                                    <li><span>Tuesday</span><span>7:00 PM - 7:15 PM</span></li>
+                                    <li><span>Wednesday</span><span>7:00 PM - 6:30 AM</span></li>
+                                    <li><span>Thursday</span><span>12:00 PM - 5:15 PM</span></li>
+                                    <li><span>Friday</span><span>5:00 PM - 6:30 PM</span></li>
+                                    <li><span>Saturday</span><span>6:00 PM - 6:30 AM</span></li>
+                                    <li><span>Sunday</span><span>6:00 AM - 6:00 PM</span></li>
+
+                                </ul>
+                            </div>
+                            <div class="fd_forcall_section">
+                                <h2 class="fd_subheading">For Call Bookings</h2>
+                                <h1>+1800-124-141</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="fd_reservation_wrapper">
+                            <div class="fd_heading_wrapper text-center">
+                                <h1 class="fd_white_color">For Bulk Order</h1>
+                            </div>
+                            <form action="" method="POST" id="bookingform">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="booking_date" value="" placeholder="Date" class="form-control fd_date" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="booking_time" value="" placeholder="Time" class="form-control fd_time" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="bname" value="" placeholder="Name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="bmobile" value="" placeholder="Mobile" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" id="bemail" value="" placeholder="Your Email" class="form-control">
+                                        </div>
+                                    </div>-->
+
+                                    <div class="col-md-12">
+                                        <textarea id="bmessage" placeholder="Message" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="fd_btn">Booking Now</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                    <!--<div class="col-md-4">
+                    <div class="fd_opening_time_wrapper text-center">
+                        <div class="fd_heading">
+                            <div class="fd_shap_wrapper">
+                                <h1>Delivery Time</h1>
+                            </div>
+                        </div>
+                        <div class="fd_opentime">
+                            <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/cup1.svg" alt="">
+                        <!--This Is a Static Delivery Time. You Can Change Day Name And Time From Here -->
+                    <!--<ul>
+                            <li><span >Monday</span><span>11:15 AM 7:20 PM</span></li>
+                            <li><span>Tuesday</span><span>7:00 PM 7:15 PM</span></li>
+                            <li><span>Wednesday</span><span>6:00 PM 6:30 AM</span></li>
+                            <li><span>Thursday</span><span>9:00 AM 5:15 PM</span></li>
+                            <li><span>Friday</span><span>10:00 AM 6:30 PM</span></li>
+                            <li><span>Saturday</span><span>6:00 PM 6:30 AM</span></li>
+                            <li><span>Sunday</span><span>6:00 AM 6:00 PM</span></li>
+                        </ul>
+                    <!--This Is a Static Delivery Time. You Can Change Day Name And Time From Here -->
+                    <!--</div>
+                            <div class="fd_forcall_section">
+                                <h2 class="fd_subheading"></h2>
+                                <h1></h1>
+                            </div>
+                        </div>
+                    </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--reservation end-->
+    <!--offer start-->
+    <div class="fd_section fd_padder_top60 fd_padder_bottom100 fd_offer_main_wrapper">
+        <div class="fd_shap_wrapper fd_shap_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="fd_offer_detail">
+                            <h1>summer sale      </h1>
+                            <h2>summer delicious       </h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inunt ..</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="fd_offer_img">
+                            <img src="http://hostingsites.co.in/developer33/caferia/assets/admin/images/coupon/card1.png" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--offer end-->
+    <!--testimonial start-->
+    <div class="fd_section fd_padder_bottom80 fd_testimonial_main_wrapper" id="testimonial">
+        <div class="fd_shap_wrapper fd_shap_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="fd_heading_wrapper text-center">
+                            <img src="assets/front/images/default_image/cup.svg" alt="">
+                            <h1>Testimonial</h1>
+                        </div>
+
+                        <div class="fd_testimonial_wrapper">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+
+                                    <div class="swiper-slide">
+                                        <div class="fd_testimonial_detail text-center">
+                                            <div class="fd_test_img fd_padder_bottom20">
+                                                <img src="http://hostingsites.co.in/developer33/caferia/assets/admin/images/testimonial/thumb/083f451b53.jpg" alt="">
+                                            </div>
+                                            <p>fdsfsfsf GET YOUR DISCOUNTSv dfdsfGET YOUR DISCOUNTSv dfdsfGET YOUR DISCOUNTSv dfdsfGET YOUR DISCOUNTSv dfdsf.</p>
+                                            <h2 class="fd_subheading">GET YOUR DISCOUNTSv dfdsf - <span>dfsdfsdfd</span></h2>
+                                            <span class="flaticon-left-quote"></span>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="fd_testimonial_detail text-center">
+                                            <div class="fd_test_img fd_padder_bottom20">
+                                                <img src="http://hostingsites.co.in/developer33/caferia/assets/admin/images/testimonial/thumb/" alt="">
+                                            </div>
+                                            <p>dgdg dgdgdfg gfdg gdg dgfd g  dg.</p>
+                                            <h2 class="fd_subheading">GET YOUR DISCOUNTSv dfdsf - <span>dfsdfsdfd</span></h2>
+                                            <span class="flaticon-left-quote"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--testimonial end-->
+    <!--contact start-->
+    <div class="fd_section fd_section_overlay fd_padder_top80" id="contact" style="background-image:url('assets/front/images/default_image/blog_bg.jpg')">
+        <div class="container">
+            <div class="row fd_padder_top100">
+                <div class="col-md-7">
+                    <div class="fd_contact_wrapper fd_reservation_wrapper">
+                        <div class="fd_heading_wrapper text-center">
+                            <h1 class="fd_white_color">Contact Us</h1>
+                        </div>
+                        <form action="" type="post" id="contactform">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="name" id="cname" value="" placeholder="Your Name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="email" id="cemail" value="" placeholder="Your Email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="subject" id="csubject" value="" placeholder="Your Subject" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="contact" id="ccontact" value="" placeholder="Your Mobile no. " class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea name="description" id="cdescription" placeholder="Message" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="fd_btn">send message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="fd_contact_img">
+                        <img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/chef.png" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--contact end-->
+    <!--contact detail start-->
+    <div class="fd_contact_detail_wrapper fd_section fd_padder_top80 fd_padder_bottom50">
+        <div class="container">
+            <div class="row">
+                <div class="fd_contact_detail_section">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="fd_contact_detail_box text-center">
+                            <span class="fd_transition"><i class="flaticon-telephone"></i></span>
+                            <h2 class="fd_subheading">Contact </h2>
+                            <p>+1800-124-141</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="fd_contact_detail_box text-center">
+                            <span class="fd_transition"><i class="flaticon-close-envelope"></i></span>
+                            <h2 class="fd_subheading">Email </h2>
+                            <p>Caferia@example.com </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="fd_contact_detail_box text-center">
+                            <span class="fd_transition"><i class="flaticon-maps-and-flags"></i></span>
+                            <h2 class="fd_subheading">Location </h2>
+                            <p>12, Pebble Baye,Canada </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--contact detail end-->
+    <div class="fd_blogsigle_popup fd_transition">
+        <span class="fd_close"></span>
+        <div class="pf_popup_inner">
+
+
+            <!--banner start-->
+            <div class="fd_banner_wpapper" style="background-image:url('http://hostingsites.co.in/developer33/caferia/assets/front/images/default_image/banner_img.jpg');">
+                <div class="fd_shap_wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="fd_breadcrum_wrappper text-center fd_padder_top50 fd_padder_bottom100">
+                                    <h1 class="fd_padder_bottom20">Blog Detail</h1>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--banner end-->
+            <!--blog single start-->
+            <div class="fd_section fd_blog_single_wrapper fd_padder_bottom80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <div class="row" id="blogContent">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="fd_sidebar_wrapper">
+                                <div class="widget widget_search">
+                                    <h1 class="fd_heading_with_line fd_subheading">search</h1>
+
+                                    <div class="fd_search_wrapper">
+                                        <div class="fd_search">
+                                            <input type="text" id="searchBlog" value="" class="form-control" placeholder="Search Here">
+                                            <a href="#" class="fd_search_btn"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                        </div>
+                                        <ul class='list-group' id="searchResult"> </ul>
+                                    </div>
+                                </div>
+
+                                <div class="widget widget_categories">
+                                    <h1 class="fd_heading_with_line fd_subheading">categories</h1>
+                                    <ul></ul>
+                                </div>
+
+                                <div class="widget widget_post">
+                                    <h1 class="fd_heading_with_line fd_subheading">recent posts</h1>
+
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--blog single end-->
+
+        </div>
+    </div>
+
+    <!--checkout start-->
+    <div class="text-right">
+        <div class="fd_cart_section text-left">
+            <span class="fd_ring_effect"><span><span class="flaticon-119-shopping-bag-17"></span><span class="fd_shop_number" id="carttotal">0</span></span></span>
+
+            <div class="fd_cart_wrapper fd_transition">
+                <h2 class="fd_subheading">checkout steps</h2>
+                <!-- To Change Breakfast Lunch Dinner Time -->
+                @*<h2 class="oth_heading">Breakfast</h2>
+                    <h2 class="oth_heading">Lunch</h2>
+                    <h2 class="oth_heading">Dinner</h2>*@
+                <!-- And -->
+
+                <h2 class="fd_subheading"></h2>
+                <div id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active"><a>Cart</a></li>
+                        <li><a>shipping</a><span class="fd_line fd_transition"></span></li>
+                        <li><a>payment</a><span class="fd_line fd_transition"></span></li>
+                        <li><a>confirmation</a><span class="fd_line fd_transition"></span></li>
+                    </ul>
+                    <!-- fieldsets -->
+                    <fieldset>
+
+
+
+                        <div class="row text-left ">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-condensed" id="cart">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Title</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr class="visible-xs">
+                                            <td colspan="6"><strong>Total -     BDT <b id="totalamount">0 </b></strong></td>
+                                        </tr>
+                                        <!--<tr class="visible-xs">
+                                            <td colspan="6"><strong>Coupon Discount -     <b id="discount_amount"> 0</b></strong></td>
+                                        </tr>
+                                         <tr class="visible-xs">
+                                            <td colspan="6"><strong>Final Amount -     <b id="finalamount">0</b></strong></td>
+                                        </tr> -->
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                @if (ViewBag.User == null)
+                                {
+                                    <button class="fd_btn action-button" onclick="toastr.error('Login for continue...', '');">continue </button>
+                                }
+                                else
+                                {
+                                    <button id="cartbutton" class="fd_btn next action-button">continue</button>
+                                }
+
+
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <form id="Submit_info" method="POST">
+
+                            <div class="row text-left">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h2 class="fd_subheading">shipping information</h2>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                    <input type="radio" name="delivery_type" id="Delivery" value="1" checked>
+                                    <label class="fd_netbanking" for="Delivery">
+                                        <p class="gray text-capitalize">
+                                            <b><a> Delivery</a></b>
+                                        </p>
+                                    </label>
+                                    <input type="radio" name="delivery_type" id="Pickup" value="2">
+                                    <label class="fd_netbanking" for="Pickup">
+                                        <p class="gray text-capitalize">
+                                            <b>
+                                                <a>Pickup</a>
+                                            </b>
+                                        </p>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <input type="text" id="SDcontact" value="" placeholder="contact" class="form-control requ">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="pickupDateDiv"style="display:none">
+                                    <div class="form-group">
+                                        <input type="text" id="pickup_date" value="" placeholder="Pickup Date" class="form-control fd_date pickup_date_time requ" autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group" id="pickupTimeDiv" style="display:none">
+                                        <input type="text" id="pickup_time" value="" placeholder="Time" class="form-control " autocomplete="off" >
+                                    </div>
+                                </div>
+                                <div class="container-sm" id="mapDiv">
+                                    <div id="map" style="height:300px ; width: 550px; overflow:visible ; padding:20px">
+
+                                    </div>
+                                </div>
+
+                                @*<div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDname" placeholder="Full Name" class="form-control" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDemail" placeholder="Email" class="form-control requ" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDcontact" value="" placeholder="contact" class="form-control requ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDaddress" value="" placeholder="Address" class="form-control requ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDcountry" placeholder="Country" value="" class="form-control requ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDstate" placeholder="State" value="" class="form-control requ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDcity" placeholder="City" value="" class="form-control requ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" id="SDpincode" placeholder="Pincode" value="" class="form-control requ">
+                                        </div>
+                                    </div>*@
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button class="fd_btn previous action-button">previous</button>
+                                    <button type="submit" id="Sub_info" class="fd_btn action-button ">continue</button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+
+
+
+                    @*<div class="row text-left" id="confirmation">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <h2 class="fd_subheading">confirmation information</h2>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="fd_padder_bottom30">
+                                    <p class="gray">Hello Reaz,</p>
+                                    <p>Your order will be Shipped. Expect It To be Delivered within 2 hours after your confirmation of order</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <p class="gray text-capitalize fd_border_heading">shipping address</p>
+
+                                <p>sdfdf,<br>fwf,<br>acssc<br>dvdv, 32432 </p>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <p class="gray text-capitalize fd_border_heading">payment</p>
+
+                                <p class="text-capitalize fd_padder_bottom30">
+                                    COD
+                                </p>
+
+                            </div>
+                            <form method="POST" action="http://hostingsites.co.in/developer33/caferia/index.php/front/paymentByCod" id="submitpayment">
+                                <textarea style="display:none;" name="payment_uid">64</textarea>
+                                <textarea style="display:none;" name="payment_uniqid">bWxjMrC2</textarea>
+                                <textarea style="display:none;" name="payment_pid">[{"item":"24","size":"Single","quantity":1,"amount":300}]</textarea>
+                                <textarea style="display:none;" name="payment_status">0</textarea>
+                                <textarea style="display:none;" name="payment_mode">COD</textarea>
+                                <textarea style="display:none;" name="payment_amount">300</textarea>
+                                <textarea style="display:none;" name="payment_date">2021-01-25 00:14:52</textarea>
+                                <textarea style="display:none;" name="payment_address">sdfdf | fwf | dvdv | acssc | 32432</textarea>
+                                <textarea style="display:none;" name="used_coupen_code"></textarea>
+                                <textarea style="display:none;" name="discount_amount">0</textarea>
+                                <textarea style="display:none;" name="special_instructions"></textarea>
+                                <textarea style="display:none;" name="delivery_type">1</textarea>
+                            </form>
+
+                        </div>*@
+
+                    <fieldset>
+
+                        <form id="Submit_payment_info" method="POST">
+
+                            <div class="row text-left">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h2 class="fd_subheading">payment option</h2>
+                                    <ul class="fd_payment_wrapper">
+
+                                        <div class="fd_netbanking">
+                                            <p class="gray text-capitalize">Your Current Wallet Amount - <b>BDT </b><b id="walletAmount"></b> </p>
+                                            <p class="gray text-capitalize">Your Current Order Amount - <b>BDT </b><b id="orderamount"></b> </p>
+                                            <p class="gray text-capitalize">Discount Amount - <b>BDT </b><b id="discountamount">0</b> </p>
+                                            <p> <a href="javascrip:;" id="coupon_btn" onclick="apply_coupon_modal();" style="float:right;">Apply Coupon</a></p>
+                                            <p class="gray text-capitalize">Your Final Order Amount - <b>BDT </b><b id="finalamount"></b> </p>
+                                        </div>
+                                        @*<li>
+                                                <input type="radio" name="pay_type" id="fd_payu" value="Payumoney">
+                                                <label class="fd_netbanking" for="fd_payu">
+                                                    <p class="gray text-capitalize">
+                                                        <a>Payumoney</a>
+                                                    </p>
+                                                </label>
+                                            </li>*@
+                                        <li>
+                                            <input type="hidden" name="orderId" id="orderId" value="">
+                                            <input type="radio" name="pay_type" id="fd_paypal" value="1">
+                                            <label class="fd_netbanking" for="fd_paypal">
+                                                <p class="gray text-capitalize">
+                                                    <a>Caferia Wallet</a>
+                                                </p>
+                                            </label>
+                                        </li>
+                                        <li id="cod_optlist">
+                                            <input type="radio" name="pay_type" id="fd_cod" value="2">
+                                            <label class="fd_netbanking" for="fd_cod">
+                                                <p class="gray text-capitalize">
+                                                    <a>Cash On Delivery</a>
+                                                </p>
+                                            </label>
+                                        </li>
+
+
+                                        <li>
+                                            <p class="gray text-capitalize">Any Special instructions :- </p>
+                                            <textarea rows="4" cols="50" name="special_instructions"></textarea>
+                                        </li>
+                                    </ul>
+
+                                    <button class="fd_btn previous action-button">previous</button>
+                                    <button id="pymchse" type="submit" class="fd_btn action-button">continue</button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                    <fieldset>
+
+                        <div class="row text-left" id="confirmation">
+                        </div>
+                        <div class="row text-left">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <button class="fd_btn previous action-button">previous</button>
+                                <button class="fd_btn submit action-button" id="submitpayment">Payment</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--checkout end-->	<!--footer start-->
+    <div class="fd_footer_wrapper fd_padder_top70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="fd_footer_content text-center">
+                        <div class="fd_logo fd_padder_bottom20">
+                            <a href="javascript:;"><img src="http://hostingsites.co.in/developer33/caferia/assets/front/images/front_imges/19e9bd06bd8a588a4945cee88bbedcc6.png" alt="" class="img-fluid"></a>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco labori.</p>
+
+                        <div class="fd_menu fd_padder_bottom60">
+                            <ul>
+                                <li><a href="http://hostingsites.co.in/developer33/caferia/front/terms">Terms & Conditions</a></li>
+                                <li><a href="http://hostingsites.co.in/developer33/caferia/front/policy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer end-->
+    <!--copyright start-->
+    <div class="fd_copyright_wrapper text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <ul class="fd_social_icon fd_transition">
+                        <li><a href="" class="fd_transition"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="" class="fd_transition"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="" class="fd_transition"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="fd_transition"><i class="fa fa-address-book" aria-hidden="true"></i></a></li>
+                    </ul>
+
+                    <!--p>Copyright &copy; 2018 <a href="#">Foodies 2</a> . All Right Reserved.</p-->
+                    <p> </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--copyright end-->
+    <!-- reset password start-->
+    <div class="modal fd_modal" id="resetp">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title fd_subheading">Reset Password</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span class="fd_close"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="fd_user_inner fd_signin">
+                        <form id="resetform" action="">
+
+                            <div class="form-group">
+                                <input type="password" id="rpassword" placeholder="Password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="rcpassword" placeholder="Confirm Password" class="form-control">
+                            </div>
+                            <input type="hidden" id="acctoken" value="">
+                            <input type="hidden" id="user_id" value="">
+
+                            <button type="submit" class="fd_btn">Reset</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- reset password end-->
+    <!-- apply coupon start-->
+    <div class="modal fd_modal" id="apply_coupon">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title fd_subheading">Apply Coupon</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span class="fd_close"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="fd_user_inner fd_signin">
+                        <form id="Apply_coupon_code" action="">
+
+                            <div class="form-group">
+                                <input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control">
+                            </div>
+                            <input type="hidden" id="citem_ids" name="citem_id" value="">
+                            <button type="submit" class="fd_btn" id="apply_btn">Apply</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- apply coupon end-->
+    <!-- preorder popup start-->
+    <div class="modal fd_modal" id="pre_order_popup">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title fd_subheading">Pre Order</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span class="fd_close"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="fd_user_inner fd_signin">
+                        <form id="pre_order_form" action="">
+                            <p>At This Movement Cafe Is Closed Please Do Pre Order Now</p>
+                            <p>Please Select Your Delivery Date And Time</p>
+                            <div class="form-group">
+                                <input type="text" id="pre_order_date" name="pre_order_date" placeholder="Date" class="form-control fd_date">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="pre_order_time" name="pre_order_time" placeholder="Time" class="form-control fd_time">
+                            </div>
+
+                            <button type="submit" class="fd_btn" id="pre_order_btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- preorder popup end-->
+    <!-- item option popup start-->
+    <div class="modal fd_modal" id="item_option_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title fd_subheading">Choose Item Size</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span class="fd_close"></span></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="fd_user_inner fd_signin">
+                        <form id="item_option_form" action="">
+                            <p>Please Select item Size</p>
+                            <div class="form-group" id="item_optlist">
+
+                            </div>
+                            <!--<button type="submit" class="fd_btn" id="addToCartBtn" >Submit</button>-->
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- item option  popup end-->
+    <!-- custom js link -->
+
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/jquery.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/jquery.easing.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/moment.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/plugin/swiper/js/swiper.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS6iPUVSa2W9SKdJQX9YsI-vVKL7jaEHY&callback=initMap"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/isotope.pkgd.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/imagesloaded.pkgd.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/bootstrap.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/plugin/datepicker/bootstrap-datepicker.min.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/plugin/timepicker/bootstrap-timepicker.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/plugin/scroll/jquery.mCustomScrollbar.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/toastr.js"></script>
+    <script asp-append-version="true" type="text/javascript" src="~/assets/front/js/custom.js"></script>
+
+
+
+
+</body>
+</html>
